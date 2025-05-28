@@ -1,3 +1,6 @@
+// bestemmer hvlken verdi som er i male og female.
+// i dette tilfelle, ser det i document, etter et element som har har klassen male
+// query selector ser etter første element som har denne klassen
 const male = document.querySelector(".male")
 const female = document.querySelector(".female")
 
@@ -11,6 +14,7 @@ male.addEventListener("click", () => {
 
 female.addEventListener("click",() => {
 console.log(hp)
+//female skal få pluss en i roll
 startFight()
 })
 
@@ -56,14 +60,12 @@ const roll = document.querySelector("#Roll")
 roll.addEventListener("click",() => {
     Roll()
     
-        })
-        
+        }) 
 
 }
 
 function Roll(){
 const randomNumberChar = Math.floor(Math.random() * 6) + 1;
-const ba
 
 const randomNumberEnemy = Math.floor(Math.random() * 6) + 1;
 console.log(randomNumberChar, randomNumberEnemy)
