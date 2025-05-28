@@ -1,6 +1,8 @@
 const male = document.querySelector(".male")
 const female = document.querySelector(".female")
 
+/* knapper som viser til handing som skjer ved trykk på div element*/
+
 male.addEventListener("click", () => {
  hp = hp + 20
  console.log(hp)
@@ -16,15 +18,30 @@ let hp = 100
 console.log(hp)
 
 function startFight(){
-    document.body.innerHTML = ""
+document.body.innerHTML = ""
 
 let board = document.createElement("div")
 board.classList.add("board")
 document.body.appendChild(board)
 
+let characterHp = document.createElement("p")
+characterHp.textContent = hp
+board.appendChild(characterHp)
+
 let character = document.createElement("div")
 character.classList.add("character")
 board.appendChild(character)
+
+let battle = document.createElement("div") 
+let battleRollChar = document.createElement("p")
+let battleRollEnemy = document.createElement("p")
+battle.id = "battle"
+battleRollChar.id = "battleRollChar"
+battleRollEnemy.id = "battleRollEnemy"
+document.body.appendChild(battle)
+battle.appendChild(battleRollChar)
+battle.appendChild(battleRollEnemy)
+
 
 let enemy = document.createElement("div")
 enemy.classList.add("enemy")
@@ -35,18 +52,28 @@ button.textContent = "Roll"
 button.id = "Roll"
 board.appendChild(button)
 
+const roll = document.querySelector("#Roll")
+roll.addEventListener("click",() => {
+    Roll()
+    
+        })
+        
 
 }
 
 function Roll(){
-const randomNumber = Math.floor(Math.random() * 6) + 1;
-console.log(randomNumber)
+const randomNumberChar = Math.floor(Math.random() * 6) + 1;
+const ba
+
+const randomNumberEnemy = Math.floor(Math.random() * 6) + 1;
+console.log(randomNumberChar, randomNumberEnemy)
 
 }
-const roll = document.querySelector("Roll")
 
 
-roll.addEventListener
+
+
+
 
 
 
