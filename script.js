@@ -5,7 +5,7 @@ const male = document.querySelector(".male")
 const female = document.querySelector(".female")
 
 /* knapper som viser til handing som skjer ved trykk på div element*/
-
+// male får 20 extra hp //
 male.addEventListener("click", () => {
  hp = hp + 20
  console.log(hp)
@@ -14,6 +14,7 @@ male.addEventListener("click", () => {
 
 female.addEventListener("click",() => {
 console.log(hp)
+
 //female skal få pluss en i roll
 startFight()
 })
@@ -63,14 +64,25 @@ roll.addEventListener("click",() => {
         }) 
 
 }
+function Roll() {
+    const randomNumberChar = Math.floor(Math.random() * 20) + 1;
+    const randomNumberEnemy = Math.floor(Math.random() * 20) + 1;
 
-function Roll(){
+    console.log(randomNumberChar, randomNumberEnemy);
+
+    // Updating the elements with roll results //
+    document.getElementById("battleRollChar").textContent = `Character Roll: ${randomNumberChar}`;
+    document.getElementById("battleRollEnemy").textContent = `Enemy Roll: ${randomNumberEnemy}`;
+}
+
+/*function Roll(){
 const randomNumberChar = Math.floor(Math.random() * 6) + 1;
 
 const randomNumberEnemy = Math.floor(Math.random() * 6) + 1;
 console.log(randomNumberChar, randomNumberEnemy)
 
-}
+}*/
+
 
 
 

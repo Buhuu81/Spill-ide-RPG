@@ -5,6 +5,32 @@ body{
     height: 100vh;
     
 }
+
+.character, .enemy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #555;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.character {
+    background-color: #4CAF50; /* A nice green for the character */
+}
+
+.enemy {
+    background-color: #E74C3C; /* A bold red for the enemy */
+}
+/*
 .character{
     height: 50%;
     width: 50%;
@@ -17,6 +43,8 @@ body{
     background-color: red;
 
 }
+*/
+
 .board{
 
 height: 30%;
@@ -28,9 +56,37 @@ align-items: center;
 flex-direction: column;
 }
 
-#battle{
+/*#battle{
 height: 30%;
 width: 30%;
 background-color: black;
 color: antiquewhite;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align
+} */
+
+#battle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 150px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+#battleRollChar,
+#battleRollEnemy {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
