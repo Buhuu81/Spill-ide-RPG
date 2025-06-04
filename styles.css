@@ -1,37 +1,31 @@
 /* styles.css */
 
 body {
-    /* --- BACKGROUND IMAGE PROPERTIES --- */
-    background-image: url('images/battlefield.jpg'); /* Path to your image */
-    background-size: cover;          /* Scales the image to cover the entire body */
-    background-position: center center; /* Centers the image in the viewport */
-    background-repeat: no-repeat;    /* Prevents the image from tiling */
-    background-attachment: fixed;    /* Keeps the background image fixed */
-
-    /* --- FLEXBOX LAYOUT FOR CENTERING CONTENT --- */
+    background-image: url('images/battlefield.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
-    justify-content: center; /* Horizontally centers flex items (your choice images initially) */
-    align-items: center;     /* Vertically centers flex items */
-    height: 100vh;           /* Full viewport height */
-
-    /* --- OTHER BODY STYLES --- */
-    padding: 20px;           /* Optional padding for the body content */
-    box-sizing: border-box;  /* Includes padding in height/width calculations */
-    margin: 0;               /* Remove default browser margin */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Your chosen font */
-    background-color: #1a252f; /* Fallback background color */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a252f; /* Fallback */
 }
 
-/* Styles for the initial character choice images */
 .choice-image {
-    width: 200px;  /* Adjust as desired */
+    width: 200px;
     height: auto;
     cursor: pointer;
-    margin: 60px; /* Adds space between the images if they are side-by-side */
+    margin: 60px;
     border: 4px solid transparent;
     border-radius: 15px;
     transition: transform 0.2s ease-in-out, border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: rgba(0, 0, 0, 0.3); /* Slight dark overlay to make them pop */
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .choice-image:hover {
@@ -39,11 +33,6 @@ body {
     border-color: #e67e22;
     box-shadow: 0 0 20px rgba(230, 126, 34, 0.6);
 }
-
-
-/* --- Styles for the game screen elements --- */
-/* Your .character, .enemy, .game-sprite, .hp-text, .board, #battle, #Roll styles remain here */
-/* Ensure their backgrounds provide enough contrast against the new background image */
 
 .character, .enemy {
     display: flex;
@@ -54,19 +43,22 @@ body {
     height: 280px;
     margin: 10px;
     padding: 15px;
-    background-color: rgba(44, 62, 80, 0.8); /* Example: Dark semi-transparent background to help readability */
+    background-color: rgba(44, 62, 80, 0.8);
     color: white;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6); /* Slightly stronger shadow */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border for definition */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-sizing: border-box;
 }
 
 .game-sprite {
     width: 90%;
     max-width: 160px;
-    height: auto;
+    height: auto; /* Maintain aspect ratio */
+    /* If you want fixed height for sprites: */
+    /* height: 170px; */
+    /* object-fit: contain; */
     margin-bottom: 10px;
     border-radius: 5px;
 }
@@ -75,18 +67,18 @@ body {
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.5); /* Darker, more opaque background for HP text */
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 6px 10px;
     border-radius: 5px;
     width: 90%;
     box-sizing: border-box;
-    margin-top: auto;
+    margin-top: auto; /* Pushes HP text to bottom of flex container */
 }
 
 .board {
     min-height: 220px;
     width: 320px;
-    background-color: rgba(52, 73, 94, 0.85); /* Example: Dark semi-transparent background */
+    background-color: rgba(52, 73, 94, 0.85);
     color: white;
     display: flex;
     justify-content: space-around;
@@ -108,7 +100,7 @@ body {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.3); /* Slightly transparent background for battle log */
+    background-color: rgba(0, 0, 0, 0.3);
     color: white;
     border-radius: 8px;
     text-align: center;
@@ -116,7 +108,6 @@ body {
     box-sizing: border-box;
 }
 
-/* ... (Your #battleRollChar, #battleRollEnemy, #Roll styles remain the same) ... */
 #battleRollChar,
 #battleRollEnemy {
     margin: 8px 0;
@@ -128,7 +119,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     color: white;
-    background-color: #e67e22; /* Orange button */
+    background-color: #e67e22;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -137,9 +128,86 @@ body {
 }
 
 #Roll:hover {
-    background-color: #d35400; /* Darker orange */
+    background-color: #d35400;
 }
 
 #Roll:active {
-    transform: translateY(1px); /* Slight press effect */
+    transform: translateY(1px);
+}
+
+#victoryBanner {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    margin: 15px auto;
+    border-radius: 8px;
+    z-index: 5000; /* Above other board content */
+}
+
+#upgradeChoicesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.upgrade-choice-btn {
+    background-color: #4a69bd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 90%;
+    max-width: 280px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+    line-height: 1.4;
+}
+
+.upgrade-choice-btn strong {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.upgrade-choice-btn small {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.upgrade-choice-btn:hover {
+    background-color: #6a89cc;
+}
+
+#nextBattleBtn {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #27ae60; /* Green */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+#nextBattleBtn:hover {
+    background-color: #229954;
+}
+
+#defeatBanner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 10000; /* On top of everything */
+    background-color: #000; /* Fallback */
 }
