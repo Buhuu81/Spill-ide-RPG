@@ -26,7 +26,7 @@ const availableUpgrades = [
             player.currentHp += 25;
             if (player.currentHp > player.maxHp) player.currentHp = player.maxHp;
             console.log("Applied: Heal HP. New HP:", player.currentHp);
-            updatePlayerHpDisplay(); // Update display
+            updatePlayerHpDisplay();
         }
     },
     {
@@ -38,7 +38,7 @@ const availableUpgrades = [
             player.currentHp += 15;
             if (player.currentHp > player.maxHp) player.currentHp = player.maxHp;
             console.log("Applied: Increase Max HP. New Max HP:", player.maxHp);
-            updatePlayerHpDisplay(); // Update display
+            updatePlayerHpDisplay();
         }
     },
     {
@@ -61,18 +61,52 @@ const availableUpgrades = [
     }
 ];
 
-let enemyStats = {
-    name: "Viking Raider", // Changed name slightly for variety
-    maxHp: 150,
-    currentHp: 150,
-    spriteSrc: "images/Male viking.jpg" // Default enemy sprite (Male battle image)
+const allEnemies = [
+    {
+        name: "Forest Wolf",
+        spriteSrc: "images/Woolf.jpg",
+        maxHp: 70, // Adjusted from your paste for variety
+        minDamage: 3,
+        maxDamage: 6
+    },
+    {
+        name: "Enraged Chicken",
+        spriteSrc: "images/Chicken.jpg",
+        maxHp: 30, // Adjusted
+        minDamage: 1,
+        maxDamage: 2
+    },
+    {
+        name: "Wild Boar",
+        spriteSrc: "images/Boar.jpg",
+        maxHp: 100, // Adjusted
+        minDamage: 4,
+        maxDamage: 8
+    },
+    {
+        name: "Viking Raider",
+        spriteSrc: "images/Male viking.jpg", // Uses the male player battle sprite
+        maxHp: 120,
+        minDamage: 5,
+        maxDamage: 9
+    }
+];
+
+// This object will hold the stats of the CURRENTLY active enemy
+let currentEnemy = {
+    name: "",
+    spriteSrc: "",
+    maxHp: 0,
+    currentHp: 0,
+    minDamage: 0,
+    maxDamage: 0
 };
 
 // --- Initial Checks ---
 if (maleChoiceImage && femaleChoiceImage) {
     console.log("Male and Female choice images found.");
 } else {
-    console.error("Could not find .male or .female choice images. Check HTML class names and ensure script runs after elements are loaded (module script does this).");
+    console.error("Could not find .male or .female choice images. Check HTML class names and image paths.");
 }
 
 // --- Event Listeners for Character Choice ---
@@ -102,61 +136,64 @@ if (femaleChoiceImage) {
     });
 }
 
-// script.js
-
-// ... (your existing const maleChoiceImage, femaleChoiceImage, player object, availableUpgrades, enemyStats, event listeners) ...
-
 // --- Game UI Update Functions ---
 function updatePlayerHpDisplay() {
     const characterHpDisplayP = document.getElementById("characterHpDisplay");
-    // console.log("Attempting to update player HP. Element found:", characterHpDisplayP); // For debugging
     if (characterHpDisplayP) {
         characterHpDisplayP.textContent = `Player HP: ${player.currentHp}/${player.maxHp}`;
-        // console.log("Player HP display updated to:", characterHpDisplayP.textContent); // For debugging
     } else {
-        console.error("ERROR: characterHpDisplay element not found!");
+        console.error("ERROR: characterHpDisplay element not found during update!");
     }
 }
 
 function updateEnemyHpDisplay() {
     const enemyHpDisplayP = document.getElementById("enemyHpDisplay");
-    // console.log("Attempting to update enemy HP. Element found:", enemyHpDisplayP); // For debugging
     if (enemyHpDisplayP) {
-        enemyHpDisplayP.textContent = `Enemy HP: ${enemyStats.currentHp}/${enemyStats.maxHp}`;
-        // console.log("Enemy HP display updated to:", enemyHpDisplayP.textContent); // For debugging
+        enemyHpDisplayP.textContent = `Enemy: ${currentEnemy.name} | HP: ${currentEnemy.currentHp}/${currentEnemy.maxHp}`;
     } else {
-        console.error("ERROR: enemyHpDisplay element not found!");
+        console.error("ERROR: enemyHpDisplay element not found during update!");
     }
 }
 
-// --- Game Setup Function ---
-function startFight() {
-    console.log("startFight() called. Player HP:", player.currentHp, "Female Selected:", player.isFemale);
-    document.body.innerHTML = ""; // Clear initial choice images
-    document.body.style.justifyContent = 'space-evenly'; // For game screen layout
+// --- Game Logic Functions ---
+function loadRandomEnemy() {
+    const randomIndex = Math.floor(Math.random() * allEnemies.length);
+    const selectedEnemyTemplate = allEnemies[randomIndex];
 
-    enemyStats.currentHp = enemyStats.maxHp; // Reset enemy HP
+    currentEnemy.name = selectedEnemyTemplate.name;
+    currentEnemy.spriteSrc = selectedEnemyTemplate.spriteSrc;
+    currentEnemy.maxHp = selectedEnemyTemplate.maxHp;
+    currentEnemy.currentHp = selectedEnemyTemplate.maxHp; // Start with full HP
+    currentEnemy.minDamage = selectedEnemyTemplate.minDamage;
+    currentEnemy.maxDamage = selectedEnemyTemplate.maxDamage;
+
+    console.log(`Loaded new enemy: ${currentEnemy.name}`);
+}
+
+function startFight() {
+    console.log("startFight() called. Player HP:", player.currentHp, "Selected Female:", player.isFemale);
+    document.body.innerHTML = "";
+    document.body.style.justifyContent = 'space-evenly';
+
+    loadRandomEnemy(); // Load the first random enemy's stats into currentEnemy
 
     // --- Player Character Setup ---
     let characterDiv = document.createElement("div");
     characterDiv.classList.add("character");
-
     let characterSprite = document.createElement("img");
     characterSprite.classList.add("game-sprite");
-    characterSprite.src = player.spriteSrc; // Uses path set during character selection
+    characterSprite.src = player.spriteSrc; // Uses spriteSrc set during character choice
     characterSprite.alt = player.isFemale ? "Female Viking Player" : "Male Viking Player";
     characterDiv.appendChild(characterSprite);
-
     let characterHpDisplay = document.createElement("p");
-    characterHpDisplay.id = "characterHpDisplay"; // ID for querySelector
+    characterHpDisplay.id = "characterHpDisplay";
     characterHpDisplay.classList.add("hp-text");
-    // Text will be set by updatePlayerHpDisplay() after characterDiv is in the DOM
     characterDiv.appendChild(characterHpDisplay);
+    // Initial HP display set after elements are added to body
 
     // --- Central Board/Battle Log Setup ---
     let boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
-
     let battleInfoDiv = document.createElement("div");
     battleInfoDiv.id = "battle";
     let battleRollCharP = document.createElement("p");
@@ -168,7 +205,6 @@ function startFight() {
     battleRollEnemyP.textContent = "Enemy Roll: -";
     battleInfoDiv.appendChild(battleRollEnemyP);
     boardDiv.appendChild(battleInfoDiv);
-
     let rollButton = document.createElement("button");
     rollButton.textContent = "Roll Dice!";
     rollButton.id = "Roll";
@@ -177,40 +213,36 @@ function startFight() {
     // --- Enemy Setup ---
     let enemyDiv = document.createElement("div");
     enemyDiv.classList.add("enemy");
-
     let enemySpriteImg = document.createElement("img");
     enemySpriteImg.classList.add("game-sprite");
-    enemySpriteImg.src = enemyStats.spriteSrc;
-    enemySpriteImg.alt = enemyStats.name;
+    enemySpriteImg.src = currentEnemy.spriteSrc; // Uses currentEnemy populated by loadRandomEnemy
+    enemySpriteImg.alt = currentEnemy.name;
     enemyDiv.appendChild(enemySpriteImg);
-
     let enemyHpDisplay = document.createElement("p");
-    enemyHpDisplay.id = "enemyHpDisplay"; // ID for querySelector
+    enemyHpDisplay.id = "enemyHpDisplay";
     enemyHpDisplay.classList.add("hp-text");
-    // Text will be set by updateEnemyHpDisplay() after enemyDiv is in the DOM
     enemyDiv.appendChild(enemyHpDisplay);
+    // Initial HP display set after elements are added to body
 
-    // --- Append main game elements to the body FIRST ---
+    // Append main elements
     document.body.appendChild(characterDiv);
     document.body.appendChild(boardDiv);
     document.body.appendChild(enemyDiv);
 
-    // --- THEN update the HP displays ---
-    // Now that the elements are definitely in the main document, getElementById should reliably find them.
+    // Update HP displays now that elements are in the DOM
     updatePlayerHpDisplay();
     updateEnemyHpDisplay();
 
     rollButton.addEventListener("click", Roll);
-    console.log("Game interface created. HP displays should be populated.");
+    console.log(`Game interface created. First enemy: ${currentEnemy.name}`);
 }
 
-// ... (Your Roll() function, showVictoryBannerAndUpgrades(), presentUpgradeChoices(), showDefeatSequence(), resetToStartScreen(), prepareNextBattle() functions remain the same as the last complete version) ...
-
-console.log("script.js processed.");
-
-// --- Battle Logic Function ---
 function Roll() {
     console.log("Roll() called.");
+    const battleRollCharP = document.getElementById("battleRollChar");
+    const battleRollEnemyP = document.getElementById("battleRollEnemy");
+    const rollBtn = document.getElementById("Roll");
+
     let randomNumberChar = Math.floor(Math.random() * 20) + 1;
     const randomNumberEnemy = Math.floor(Math.random() * 20) + 1;
     let finalCharRoll = randomNumberChar + player.rollBonus;
@@ -218,32 +250,28 @@ function Roll() {
     console.log("Player Base Roll:", randomNumberChar, "Bonus:", player.rollBonus, "Final Roll:", finalCharRoll);
     console.log("Enemy Roll:", randomNumberEnemy);
 
-    const battleRollCharP = document.getElementById("battleRollChar");
-    const battleRollEnemyP = document.getElementById("battleRollEnemy");
     if (battleRollCharP) battleRollCharP.textContent = `Player Roll: ${finalCharRoll}`;
     if (battleRollEnemyP) battleRollEnemyP.textContent = `Enemy Roll: ${randomNumberEnemy}`;
-
-    const rollBtn = document.getElementById("Roll");
 
     if (finalCharRoll > randomNumberEnemy) { // Player hits
         let baseDamageDealt = Math.floor(Math.random() * (player.maxBaseDamage - player.minBaseDamage + 1)) + player.minBaseDamage;
         let totalDamageDealt = baseDamageDealt + player.damageBonus;
-        console.log(`Player hits enemy for ${totalDamageDealt} damage!`);
-        enemyStats.currentHp -= totalDamageDealt;
-        if (enemyStats.currentHp < 0) enemyStats.currentHp = 0;
+        console.log(`Player hits ${currentEnemy.name} for ${totalDamageDealt} damage!`);
+        currentEnemy.currentHp -= totalDamageDealt;
+        if (currentEnemy.currentHp < 0) currentEnemy.currentHp = 0;
         updateEnemyHpDisplay();
-        console.log(`Enemy HP remaining: ${enemyStats.currentHp}`);
+        console.log(`${currentEnemy.name} HP remaining: ${currentEnemy.currentHp}`);
 
-        if (enemyStats.currentHp === 0) {
-            console.log("Enemy defeated!");
+        if (currentEnemy.currentHp === 0) {
+            console.log(`${currentEnemy.name} defeated!`);
             if (rollBtn) rollBtn.disabled = true;
             if (battleRollCharP) battleRollCharP.textContent = "";
             if (battleRollEnemyP) battleRollEnemyP.textContent = "";
             showVictoryBannerAndUpgrades();
         }
     } else if (randomNumberEnemy > finalCharRoll) { // Enemy hits
-        let damageTaken = Math.floor(Math.random() * 4) + 2; // Enemy damage: 1d4 + 2 (example)
-        console.log(`Enemy hits player for ${damageTaken} damage!`);
+        let damageTaken = Math.floor(Math.random() * (currentEnemy.maxDamage - currentEnemy.minDamage + 1)) + currentEnemy.minDamage;
+        console.log(`${currentEnemy.name} hits player for ${damageTaken} damage!`);
         player.currentHp -= damageTaken;
         if (player.currentHp < 0) player.currentHp = 0;
         updatePlayerHpDisplay();
@@ -261,7 +289,6 @@ function Roll() {
     }
 }
 
-// --- Post-Battle Sequence Functions ---
 function showVictoryBannerAndUpgrades() {
     const boardDiv = document.querySelector(".board");
     if (!boardDiv) return;
@@ -306,8 +333,7 @@ function presentUpgradeChoices() {
         upgradeButton.classList.add("upgrade-choice-btn");
         upgradeButton.innerHTML = `<strong>${upgrade.name}</strong><br><small>${upgrade.description}</small>`;
         upgradeButton.onclick = () => {
-            upgrade.apply();
-            // updatePlayerHpDisplay(); // Already called within upgrade.apply() for HP upgrades
+            upgrade.apply(); // This will call updatePlayerHpDisplay if it's an HP upgrade
             upgradeChoicesContainer.remove();
             let nextBattleButton = document.createElement("button");
             nextBattleButton.textContent = "Next Battle!";
@@ -349,15 +375,14 @@ function prepareNextBattle() {
     const nextBattleButton = document.getElementById("nextBattleBtn");
     if (nextBattleButton) nextBattleButton.remove();
 
-    // TODO: Implement logic for selecting a new/random enemy and updating enemyStats
-    // For now, just reset the current enemy type.
-    enemyStats.currentHp = enemyStats.maxHp;
-    // enemyStats.spriteSrc = "images/new_enemy.jpg"; // Example for later
-    // enemyStats.name = "New Enemy Type";
+    loadRandomEnemy(); // Load new random enemy data into currentEnemy
 
     updateEnemyHpDisplay();
-    const enemySpriteImg = document.querySelector(".enemy .game-sprite"); // Select the enemy's sprite
-    if (enemySpriteImg) enemySpriteImg.src = enemyStats.spriteSrc; // Update src if it changed
+    const enemySpriteImg = document.querySelector(".enemy .game-sprite");
+    if (enemySpriteImg) {
+        enemySpriteImg.src = currentEnemy.spriteSrc;
+        enemySpriteImg.alt = currentEnemy.name;
+    }
 
     const battleRollCharP = document.getElementById("battleRollChar");
     const battleRollEnemyP = document.getElementById("battleRollEnemy");
@@ -367,7 +392,7 @@ function prepareNextBattle() {
     const rollBtn = document.getElementById("Roll");
     if (rollBtn) rollBtn.disabled = false;
 
-    console.log("Next battle ready!");
+    console.log(`Next battle ready against: ${currentEnemy.name}!`);
 }
 
 console.log("script.js processed.");
