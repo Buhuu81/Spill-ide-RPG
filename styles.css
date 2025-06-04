@@ -1,4 +1,6 @@
 /* styles.css */
+
+/* --- Body and General Layout --- */
 body {
     background-image: url('images/battlefield.jpg');
     background-size: cover;
@@ -6,26 +8,49 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     display: flex;
-    justify-content: center; /* Initial centering for choice images */
+    justify-content: center; /* Centers #startScreenContainer or game elements */
     align-items: center;
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #1a252f; /* Fallback */
-    overflow: hidden; /* Hide scrollbars if content overflows briefly */
+    background-color: #1a252f; /* Fallback background color */
+    overflow: hidden; /* Prevent scrollbars from brief content overflow */
+}
+
+/* --- Startup Screen Specific Styles --- */
+#startScreenContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#gameTitleBanner {
+    width: 70%;
+    max-width: 550px;
+    height: auto;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+#characterChoiceArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .choice-image {
-    width: 220px; /* Slightly larger choice images */
+    width: 220px;
     height: auto;
     cursor: pointer;
-    margin: 40px; /* More space between choice images */
+    margin: 0 30px; /* Horizontal margin between choice images */
     border: 5px solid transparent;
     border-radius: 20px;
     transition: transform 0.2s ease-in-out, border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for better pop */
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .choice-image:hover {
@@ -34,9 +59,10 @@ body {
     box-shadow: 0 0 25px rgba(255, 165, 0, 0.7);
 }
 
+/* --- Game Screen General UI Elements --- */
 #defeatCounterDisplay {
     position: fixed;
-    top: 10px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0,0,0,0.8);
@@ -45,24 +71,25 @@ body {
     border-radius: 8px;
     font-size: 18px;
     font-weight: bold;
-    z-index: 1000; /* High z-index to be on top of game elements but below modals/banners */
+    z-index: 1000; /* High z-index */
     border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     text-align: center;
 }
 
+/* --- Character and Enemy Boxes --- */
 .character, .enemy {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align sprite to top, HP and bonuses will follow */
+    justify-content: flex-start;
     align-items: center;
-    width: 220px;  /* Adjusted width */
-    height: 320px; /* Adjusted height for sprite, HP, and bonuses */
+    width: 220px;
+    height: 320px; /* Adjusted for sprite, HP, and bonuses */
     margin: 10px;
     padding: 15px;
-    background-color: rgba(44, 62, 80, 0.85); /* Slightly more opaque */
+    background-color: rgba(44, 62, 80, 0.85); /* Semi-transparent dark blue-grey */
     color: white;
-    border-radius: 15px; /* More rounded */
+    border-radius: 15px;
     text-align: center;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.7);
     border: 2px solid rgba(255, 255, 255, 0.25);
@@ -71,9 +98,9 @@ body {
 
 .game-sprite {
     width: 90%;
-    max-width: 170px; /* Max width for the sprite */
-    height: auto;    /* Maintain aspect ratio, or set fixed height below */
-    /* For consistent sprite height: */
+    max-width: 170px;
+    height: auto; /* Or set a fixed height and use object-fit: contain; */
+    /* Example for fixed height: */
     /* height: 180px; */
     /* object-fit: contain; */
     margin-bottom: 10px;
@@ -81,35 +108,36 @@ body {
 }
 
 .hp-text {
-    font-size: 17px; /* Slightly larger HP text */
+    font-size: 17px;
     font-weight: bold;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.6); /* Darker background for HP */
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 7px 12px;
     border-radius: 6px;
     width: 95%;
     box-sizing: border-box;
-    margin-top: 5px; /* Space from sprite */
+    margin-top: 5px;
     text-shadow: 1px 1px 2px black;
 }
 
 .bonus-text {
     font-size: 14px;
-    color: #f1c40f; /* Gold color for bonuses */
-    margin-top: 8px; /* Space from HP text */
+    color: #f1c40f; /* Gold color */
+    margin-top: 8px;
     text-align: center;
     width: 100%;
     font-weight: normal;
-    min-height: 20px; /* Ensure space even if no bonuses */
+    min-height: 20px; /* Ensures space even if no bonuses are shown */
 }
 
+/* --- Game Board and Battle Log --- */
 .board {
-    min-height: 240px; /* Adjusted min-height */
-    width: 340px;  /* Adjusted width */
-    background-color: rgba(52, 73, 94, 0.9); /* Slightly more opaque */
+    min-height: 240px;
+    width: 340px;
+    background-color: rgba(52, 73, 94, 0.9); /* Darker semi-transparent */
     color: white;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* Distributes battle log and button/upgrades */
     align-items: center;
     flex-direction: column;
     padding: 20px;
@@ -128,11 +156,11 @@ body {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for battle log */
+    background-color: rgba(0, 0, 0, 0.4);
     color: white;
     border-radius: 8px;
     text-align: center;
-    font-size: 17px; /* Slightly larger battle log text */
+    font-size: 17px;
     box-sizing: border-box;
 }
 
@@ -142,7 +170,8 @@ body {
     font-weight: bold;
 }
 
-#Roll, #nextBattleBtn { /* Shared styles for main action buttons */
+/* --- Buttons --- */
+#Roll, #nextBattleBtn {
     padding: 12px 25px;
     font-size: 18px;
     font-weight: bold;
@@ -177,49 +206,15 @@ body {
     background-color: #229954;
 }
 
-
-#victoryBanner { /* Used for non-boss and boss victory */
-    display: block;
-    width: 90%;
-    max-width: 320px; /* Max width for the banner */
-    height: auto;
-    margin: 10px auto;
-    border-radius: 8px;
-    z-index: 5000;
-}
-
-#rewardChest {
-    display: block;
-    width: 120px;
-    height: auto;
-    margin: 20px auto;
-    border-radius: 8px;
-}
-.clickable-chest {
-    cursor: pointer;
-    transition: transform 0.2s ease-out;
-}
-.clickable-chest:hover {
-    transform: scale(1.15);
-}
-
-#upgradeChoicesContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 15px; /* Space from where chest/banner was */
-}
-
 .upgrade-choice-btn {
-    background-color: #3498db; /* Brighter blue for upgrades */
+    background-color: #3498db; /* Blue for upgrades */
     color: white;
     border: none;
     border-radius: 8px;
     padding: 12px 15px;
     margin: 8px 0;
-    width: 95%; /* Make buttons take up most of the container width */
-    max-width: 300px; /* Max width for readability */
+    width: 95%;
+    max-width: 300px;
     cursor: pointer;
     font-size: 15px;
     text-align: left;
@@ -240,13 +235,196 @@ body {
     background-color: #2980b9; /* Darker blue */
 }
 
+/* --- Banners and Chest --- */
+#victoryBanner {
+    display: block;
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    margin: 10px auto; /* Centered within its container (boardDiv) */
+    border-radius: 8px;
+    z-index: 5000; /* Above other board content */
+}
+
+#rewardChest {
+    display: block;
+    width: 120px;
+    height: auto;
+    margin: 20px auto; /* Centered in boardDiv after roll results hide */
+    border-radius: 8px;
+}
+.clickable-chest {
+    cursor: pointer;
+    transition: transform 0.2s ease-out;
+}
+.clickable-chest:hover {
+    transform: scale(1.15);
+}
+
+#upgradeChoicesContainer { /* Container for upgrade buttons */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
 #defeatBanner {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
-    z-index: 10000; /* Highest z-index */
+    object-fit: cover; /* Cover screen, may crop */
+    z-index: 10000;    /* Highest: on top of everything */
     background-color: #000; /* Black fallback */
+}
+
+#resetGameButton {
+    position: fixed;    /* Fixed position relative to the viewport */
+    bottom: 20px;       /* 20px from the bottom of the screen */
+    left: 50%;          /* Start positioning at 50% from the left */
+    transform: translateX(-50%); /* Shift it left by half its own width to perfectly center it */
+    
+    padding: 10px 22px; /* Padding inside the button */
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #e74c3c; /* A distinct red color, often used for reset/danger */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 900;      /* Ensures it's above general game elements but below full-screen overlays like #defeatBanner */
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#resetGameButton:hover {
+    background-color: #c0392b; /* Darker red on hover */
+    filter: brightness(110%);
+}
+
+#resetGameButton:active {
+    transform: translateX(-50%) translateY(2px); /* Keep X transform, add Y for press effect */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* styles.css */
+
+/* ... (all your existing CSS) ... */
+
+/* Styles for the dice animation elements */
+.die-animation-sprite {
+    width: 50px;  /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    margin: 5px 10px; /* Space around dice if shown side-by-side */
+    /* display: inline-block; /* Set by JS when shown */
+}
+
+/* The 'rolling' class will apply the animation */
+.rolling {
+    animation: rollDieAnimation 1.5s ease-in-out; /* Match duration with JS setTimeout */
+}
+
+/* Keyframe animation for the dice roll */
+@keyframes rollDieAnimation {
+    0% {
+        transform: rotate(0deg) scale(0.8);
+        opacity: 0.5;
+    }
+    25% {
+        transform: rotate(180deg) scale(1.2) translateY(-10px);
+        opacity: 1;
+    }
+    50% {
+        transform: rotate(360deg) scale(0.9) translateY(5px);
+        opacity: 0.7;
+    }
+    75% {
+        transform: rotate(540deg) scale(1.1) translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(720deg) scale(1); /* End in a normal state */
+        opacity: 1;
+    }
+}
+
+/* Adjust #battle if dice make it too crowded */
+#battle {
+    /* ... existing styles ... */
+    min-height: 80px; /* Ensure enough space for dice or text */
+    /* You might want to use flex-wrap if dice and text are shown together */
+    /* flex-wrap: wrap; */
+}
+/* styles.css */
+
+/* ... (all your existing CSS rules) ... */
+
+.character, .enemy {
+    /* ... existing styles ... */
+    position: relative; /* ADD THIS: Allows absolute positioning of children within */
+    /* display, flex-direction, justify-content, align-items, width, height, etc. remain */
+}
+
+/* --- Hit Marker and Damage Text Styles --- */
+.hit-marker-sprite {
+    position: absolute;
+    top: 50%;             /* Center vertically */
+    left: 50%;            /* Center horizontally */
+    transform: translate(-50%, -50%) scale(0.5); /* Center precisely and start smaller */
+    width: 70px;          /* Adjust size of your hit.png */
+    height: auto;
+    z-index: 10;          /* Above the character/enemy sprite */
+    pointer-events: none; /* Prevents interference with mouse events */
+    opacity: 0;           /* Start invisible */
+    animation: hitMarkerAnimation 0.6s ease-out forwards; /* 'forwards' keeps last frame state */
+}
+
+.damage-text-popup {
+    position: absolute;
+    top: 45%;             /* Start position (adjust as needed) */
+    left: 50%;
+    transform: translateX(-50%); /* Horizontal centering */
+    font-size: 26px;      /* Make damage numbers prominent */
+    font-weight: bold;
+    color: #ff4757;       /* Bright red for damage */
+    text-shadow: /* White outline for readability */
+        -1px -1px 0 #fff,  
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff,
+        /* Subtle black shadow for depth */
+         0px 0px 6px rgba(0,0,0,0.7);
+    z-index: 11;          /* Above hit marker */
+    pointer-events: none;
+    opacity: 0;           /* Start invisible */
+    animation: damageTextAnimation 1.5s ease-out forwards;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes hitMarkerAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2); /* Quick expansion */
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8); /* Fade out and shrink slightly */
+    }
+}
+
+@keyframes damageTextAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0px) scale(0.8); /* Start */
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50px) scale(1.3); /* Float up, fade out, and grow */
+    }
 }
