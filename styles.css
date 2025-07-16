@@ -59,6 +59,68 @@ body {
     box-shadow: 0 0 25px rgba(255, 165, 0, 0.7);
 }
 
+/* NEW: Class Selection Styles */
+#classSelectionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    color: white;
+    text-align: center;
+}
+
+#classSelectionContainer h2 {
+    color: #f1c40f;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.class-choice-area {
+    display: flex;
+    gap: 30px; /* Space between class buttons */
+}
+
+.class-choice-btn {
+    background-color: #34495e; /* Darker blue-grey */
+    color: white;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    padding: 25px 20px;
+    width: 200px;
+    min-height: 150px; /* Ensure consistent height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.class-choice-btn strong {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #e74c3c; /* Red highlight for name */
+}
+
+.class-choice-btn small {
+    font-size: 0.9em;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.class-choice-btn:hover {
+    background-color: #2c3e50; /* Slightly lighter on hover */
+    border-color: #e67e22; /* Orange border */
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
 /* --- Game Screen General UI Elements --- */
 #defeatCounterDisplay {
     position: fixed;
@@ -84,7 +146,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     width: 220px;
-    height: 320px; /* Adjusted for sprite, HP, and bonuses */
+    height: 380px; /* Adjusted height for new displays */
     margin: 10px;
     padding: 15px;
     background-color: rgba(44, 62, 80, 0.85); /* Semi-transparent dark blue-grey */
@@ -94,15 +156,13 @@ body {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.7);
     border: 2px solid rgba(255, 255, 255, 0.25);
     box-sizing: border-box;
+    position: relative; /* For hit/damage effects */
 }
 
 .game-sprite {
     width: 90%;
     max-width: 170px;
-    height: auto; /* Or set a fixed height and use object-fit: contain; */
-    /* Example for fixed height: */
-    /* height: 180px; */
-    /* object-fit: contain; */
+    height: auto;
     margin-bottom: 10px;
     border-radius: 8px;
 }
@@ -119,6 +179,73 @@ body {
     margin-top: 5px;
     text-shadow: 1px 1px 2px black;
 }
+
+.mana-text { /* NEW: Mana text style */
+    font-size: 16px;
+    font-weight: bold;
+    color: #8be4ff; /* Light blue for mana */
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 7px 12px;
+    border-radius: 6px;
+    width: 95%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.level-text { /* NEW: Level text style */
+    font-size: 16px;
+    font-weight: bold;
+    color: #f1c40f; /* Gold for level */
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 7px 12px;
+    border-radius: 6px;
+    width: 95%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* NEW: XP Bar container */
+.exp-bar-container {
+    width: 95%;
+    height: 18px; /* Slightly taller for text */
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    margin-top: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* NEW: XP Bar fill */
+.exp-bar-fill {
+    height: 100%;
+    width: 0%; /* Default width, set by JS */
+    background-color: #2ecc71; /* Green for XP */
+    transition: width 0.5s ease-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* NEW: XP Bar text on top of fill */
+.exp-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 18px; /* Vertically center text */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    z-index: 1; /* Ensure text is above fill */
+}
+
 
 .bonus-text {
     font-size: 14px;
@@ -148,29 +275,29 @@ body {
     box-sizing: border-box;
 }
 
-#battle {
+#battle { /* Now primarily for Battle Log messages and enemy dice */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 70px; /* Ensure space for messages */
     margin-bottom: 15px;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.4);
     color: white;
     border-radius: 8px;
     text-align: center;
-    font-size: 17px;
+    font-size: 1.1em;
     box-sizing: border-box;
 }
 
-#battleRollChar,
-#battleRollEnemy {
-    margin: 8px 0;
-    font-weight: bold;
+#battleLog p {
+    margin: 5px 0;
 }
 
 /* --- Buttons --- */
+/* #Roll is removed from the game, so these styles are no longer directly used for player actions */
 #Roll, #nextBattleBtn {
     padding: 12px 25px;
     font-size: 18px;
@@ -192,17 +319,17 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-#Roll {
+#Roll { /* This styling should technically not be needed now */
     background-color: #e67e22; /* Orange */
 }
 #Roll:hover {
     background-color: #d35400;
 }
 
-#nextBattleBtn {
+#nextBattleBtn, #continueJourneyBtn { /* Renamed for clarity in script, reusing styles */
     background-color: #27ae60; /* Green */
 }
-#nextBattleBtn:hover {
+#nextBattleBtn:hover, #continueJourneyBtn:hover {
     background-color: #229954;
 }
 
@@ -233,6 +360,111 @@ body {
 }
 .upgrade-choice-btn:hover {
     background-color: #2980b9; /* Darker blue */
+}
+
+/* NEW: Map System Doors Styles */
+.doors-container {
+    display: flex;
+    gap: 25px; /* Space between doors */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping if many doors or small screen */
+    justify-content: center;
+}
+
+.door-choice-btn {
+    background-color: #556270; /* Dark teal-grey */
+    color: white;
+    border: 3px solid #7f8c8d; /* Complementary border */
+    border-radius: 12px;
+    padding: 30px 25px;
+    width: 180px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.door-choice-btn:hover {
+    background-color: #4a545e;
+    border-color: #f1c40f; /* Gold highlight */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+
+/* NEW: Spell Action Bar Container */
+#spellActionBar {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between spell buttons */
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 8px;
+    margin-top: 15px; /* Space from battle log */
+}
+
+.spell-button {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #5d227f; /* Deep purple for magic actions */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, opacity 0.2s ease;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    flex: 1; /* Make buttons take equal space */
+    min-width: 100px; /* Minimum width for buttons */
+    max-width: 150px; /* Maximum width */
+    text-align: center;
+}
+
+.spell-button strong {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 3px;
+}
+
+.spell-button small {
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+.spell-button:hover:not(:disabled) {
+    background-color: #4a1961;
+    transform: translateY(-2px);
+}
+
+.spell-button:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.spell-button:disabled {
+    background-color: #333;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none; /* No hover/active effect when disabled */
+    box-shadow: none;
+}
+
+.spell-button.disabled-mana {
+    background-color: #7b4c8a; /* Lighter shade if disabled due to mana */
+    opacity: 0.8;
+}
+.spell-button.disabled-action { /* When an action is in progress (during enemy turn) */
+    pointer-events: none; /* Prevent clicks */
+    opacity: 0.4;
 }
 
 /* --- Banners and Chest --- */
@@ -281,45 +513,40 @@ body {
 }
 
 #resetGameButton {
-    position: fixed;    /* Fixed position relative to the viewport */
-    bottom: 20px;       /* 20px from the bottom of the screen */
-    left: 50%;          /* Start positioning at 50% from the left */
-    transform: translateX(-50%); /* Shift it left by half its own width to perfectly center it */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     
-    padding: 10px 22px; /* Padding inside the button */
+    padding: 10px 22px;
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #e74c3c; /* A distinct red color, often used for reset/danger */
+    background-color: #e74c3c;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    z-index: 900;      /* Ensures it's above general game elements but below full-screen overlays like #defeatBanner */
+    z-index: 900;
     box-shadow: 0 3px 7px rgba(0,0,0,0.3);
     text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 #resetGameButton:hover {
-    background-color: #c0392b; /* Darker red on hover */
+    background-color: #c0392b;
     filter: brightness(110%);
 }
 
 #resetGameButton:active {
-    transform: translateX(-50%) translateY(2px); /* Keep X transform, add Y for press effect */
+    transform: translateX(-50%) translateY(2px);
     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-/* styles.css */
-
-/* ... (all your existing CSS) ... */
-
 /* Styles for the dice animation elements */
 .die-animation-sprite {
-    width: 50px;  /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    margin: 5px 10px; /* Space around dice if shown side-by-side */
-    /* display: inline-block; /* Set by JS when shown */
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px;
 }
 
 /* The 'rolling' class will apply the animation */
@@ -346,85 +573,105 @@ body {
         opacity: 1;
     }
     100% {
-        transform: rotate(720deg) scale(1); /* End in a normal state */
+        transform: rotate(720deg) scale(1);
         opacity: 1;
     }
 }
 
 /* Adjust #battle if dice make it too crowded */
 #battle {
-    /* ... existing styles ... */
-    min-height: 80px; /* Ensure enough space for dice or text */
-    /* You might want to use flex-wrap if dice and text are shown together */
-    /* flex-wrap: wrap; */
+    min-height: 80px;
 }
-/* styles.css */
 
-/* ... (all your existing CSS rules) ... */
-
+/* Styles for hit/damage/healing effects */
 .character, .enemy {
-    /* ... existing styles ... */
-    position: relative; /* ADD THIS: Allows absolute positioning of children within */
-    /* display, flex-direction, justify-content, align-items, width, height, etc. remain */
+    position: relative;
 }
 
-/* --- Hit Marker and Damage Text Styles --- */
 .hit-marker-sprite {
     position: absolute;
-    top: 50%;             /* Center vertically */
-    left: 50%;            /* Center horizontally */
-    transform: translate(-50%, -50%) scale(0.5); /* Center precisely and start smaller */
-    width: 70px;          /* Adjust size of your hit.png */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 70px;
     height: auto;
-    z-index: 10;          /* Above the character/enemy sprite */
-    pointer-events: none; /* Prevents interference with mouse events */
-    opacity: 0;           /* Start invisible */
-    animation: hitMarkerAnimation 0.6s ease-out forwards; /* 'forwards' keeps last frame state */
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    animation: hitMarkerAnimation 0.6s ease-out forwards;
 }
 
 .damage-text-popup {
     position: absolute;
-    top: 45%;             /* Start position (adjust as needed) */
+    top: 45%;
     left: 50%;
-    transform: translateX(-50%); /* Horizontal centering */
-    font-size: 26px;      /* Make damage numbers prominent */
+    transform: translateX(-50%);
+    font-size: 26px;
     font-weight: bold;
-    color: #ff4757;       /* Bright red for damage */
-    text-shadow: /* White outline for readability */
-        -1px -1px 0 #fff,  
+    color: #ff4757;
+    text-shadow:
+        -1px -1px 0 #fff,
          1px -1px 0 #fff,
         -1px  1px 0 #fff,
          1px  1px 0 #fff,
-        /* Subtle black shadow for depth */
          0px 0px 6px rgba(0,0,0,0.7);
-    z-index: 11;          /* Above hit marker */
+    z-index: 11;
     pointer-events: none;
-    opacity: 0;           /* Start invisible */
+    opacity: 0;
     animation: damageTextAnimation 1.5s ease-out forwards;
 }
 
-/* --- Keyframe Animations --- */
+.healing-text { /* NEW: Specific style for healing numbers */
+    color: #2ecc71; /* Green for healing */
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         0px 0px 6px rgba(0,0,0,0.7);
+}
+
+/* Keyframe Animations */
 @keyframes hitMarkerAnimation {
     0% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(0.5);
     }
     50% {
-        transform: translate(-50%, -50%) scale(1.2); /* Quick expansion */
+        transform: translate(-50%, -50%) scale(1.2);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8); /* Fade out and shrink slightly */
+        transform: translate(-50%, -50%) scale(0.8);
     }
 }
 
 @keyframes damageTextAnimation {
     0% {
         opacity: 1;
-        transform: translate(-50%, 0px) scale(0.8); /* Start */
+        transform: translate(-50%, 0px) scale(0.8);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50px) scale(1.3); /* Float up, fade out, and grow */
+        transform: translate(-50%, -50px) scale(1.3);
     }
+}
+
+/* NEW: Level Up UI */
+#spellChoiceContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+}
+#spellChoiceContainer p {
+    color: white;
+    font-size: 1.1em;
+    text-align: center;
 }
